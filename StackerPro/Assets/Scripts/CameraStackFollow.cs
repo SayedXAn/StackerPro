@@ -7,80 +7,102 @@ public class CameraStackFollow : MonoBehaviour
     [Tooltip("How much empty space to keep above the highest box")]
     public float lookAheadOffset = 3f;
 
-    [Tooltip("How fast the camera moves (0.1 is slow/smooth, 1 is instant)")]
-    public float smoothSpeed = 0.1f;
+    [Tooltip("How quickly the camera follows the stack")]
+    public float smoothTime = 0.25f;
+
+    [Tooltip("Minimum vertical change before the camera starts following")]
+    public float movementThreshold = 0.1f;
 
     [Tooltip("The default height if there are no boxes")]
     public float baseHeight = 0f;
 
-    // A list to keep track of all boxes currently in the scene
+    [Tooltip("The lowest Y position the camera is allowed to reach")]
+    public float minimumCameraY = 1f;
+
     private List<GameObject> stackedBoxes = new List<GameObject>();
 
-    // Call this method when you spawn a new box
+    private float currentVelocity = 0f;
+    private int counter = 0;
+
     public void RegisterBox(GameObject box)
     {
-        if (!stackedBoxes.Contains(box))
+        if (box != null && !stackedBoxes.Contains(box))
         {
             stackedBoxes.Add(box);
+            counter++;
+            if(counter == 10)
+            {
+                CleanupList();
+                counter = 0;
+            }
         }
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
-        if(stackedBoxes.Count == 0) return;
-        float targetY = baseHeight;
+        // Remove destroyed boxes
+        stackedBoxes.RemoveAll(box => box == null);
 
-        // 1. Find the highest point in the stack
-        if (stackedBoxes.Count > 0)
+        float highestPoint = float.MinValue;
+
+        // Find the highest point of the entire pile
+        foreach (GameObject box in stackedBoxes)
         {
-            float highestPoint = float.MinValue;
+            if (box == null)
+                continue;
 
-            foreach (GameObject box in stackedBoxes)
+            Collider2D col = box.GetComponent<Collider2D>();
+
+            if (col != null)
             {
-                if (box == null) continue; // Skip if box was destroyed
+                // Actual world-space top of the collider
+                float boxTop = col.bounds.max.y;
 
-                // Get the collider to calculate the exact top edge
-                Collider2D col = box.GetComponent<Collider2D>();
-                if (col != null)
+                if (boxTop > highestPoint)
                 {
-                    // Calculate the top edge of the box in world space
-                    float boxHeight = col.bounds.size.y;
-                    float boxTop = box.transform.position.y + (boxHeight / 2f);
-
-                    if (boxTop > highestPoint)
-                    {
-                        highestPoint = boxTop;
-                    }
+                    highestPoint = boxTop;
                 }
             }
-
-            // Set the target to the highest point found
-            targetY = highestPoint;
         }
 
-        // 2. Apply the offset (so we look slightly above the stack)
-        targetY += lookAheadOffset;
-
-        // 3. Smoothly move the camera
-        // We only modify the Y position, keeping X and Z as they are
-        if(targetY > transform.position.y)
+        // No boxes found
+        if (highestPoint == float.MinValue)
         {
-            Vector3 targetPosition = new Vector3(transform.position.x, targetY, transform.position.z);
-
-            transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed);
+            MoveCamera(baseHeight);
+            return;
         }
 
-        if ((targetY - lookAheadOffset) < transform.position.y)
+        // Camera target based on current pile peak
+        float targetY = highestPoint + lookAheadOffset;
+
+        // Never allow the camera target below the minimum height
+        targetY = Mathf.Max(targetY, minimumCameraY);
+
+        // Don't react to tiny physics fluctuations
+        if (Mathf.Abs(targetY - transform.position.y) < movementThreshold)
         {
-            Vector3 targetPosition = new Vector3(transform.position.x, Mathf.Clamp(targetY - lookAheadOffset, 1f, targetY - lookAheadOffset), transform.position.z);
-            transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed);
+            return;
         }
-        Debug.Log("Camera Position: " + transform.position.y);
-        Debug.Log("Target Y: " + targetY);
+
+        MoveCamera(targetY);
     }
 
-    // Optional: Clean up list if boxes are destroyed
-    // (You can call this if you have a mechanic that removes boxes)
+    private void MoveCamera(float targetY)
+    {
+        float newY = Mathf.SmoothDamp(
+            transform.position.y,
+            targetY,
+            ref currentVelocity,
+            smoothTime
+        );
+
+        transform.position = new Vector3(
+            transform.position.x,
+            newY,
+            transform.position.z
+        );
+    }
+
     public void CleanupList()
     {
         stackedBoxes.RemoveAll(box => box == null);
