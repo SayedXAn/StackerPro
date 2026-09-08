@@ -12,6 +12,8 @@ public class CraneController : MonoBehaviour
     private bool canDrop = true;
     public float YOffset = 1;
     //public float spawnForce = 1;
+    public GameObject spawnParent;
+
     private void Start()
     {
         SpawnBox();
@@ -34,7 +36,8 @@ public class CraneController : MonoBehaviour
         currentBox = Instantiate(
             boxPrefab,
             spawnPosition,
-            boxSpawnPoint.rotation
+            boxSpawnPoint.rotation,
+            spawnParent.transform
         );
 
         // Get the joint on the new box
@@ -57,6 +60,8 @@ public class CraneController : MonoBehaviour
         // Let physics control it
         Rigidbody2D rb = currentBox.GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Dynamic;
+
+        currentBox.GetComponent<Box>().SetDrop(true);        
 
         // Wait for this box to finish before spawning another
         StartCoroutine(SpawnNextBox());
