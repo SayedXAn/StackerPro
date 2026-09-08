@@ -11,7 +11,7 @@ public class CraneController : MonoBehaviour
 
     private bool canDrop = true;
     public float YOffset = 1;
-    public float spawnForce = 1;
+    //public float spawnForce = 1;
     private void Start()
     {
         SpawnBox();

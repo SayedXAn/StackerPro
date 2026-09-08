@@ -1237,7 +1237,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 2.48}
-  m_ConnectedAnchor: {x: 0, y: -1.7733319}
+  m_ConnectedAnchor: {x: 0, y: -1.7733382}
   m_UseConnectedAnchor: 1
   m_UseMotor: 0
   m_Motor:
@@ -1379,8 +1379,8 @@ Transform:
   m_GameObject: {fileID: 1266899076}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.56, y: -2.33361, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.0258, y: -4.95, z: 0}
+  m_LocalScale: {x: 6.5239763, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1559,7 +1559,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 2.48}
-  m_ConnectedAnchor: {x: 0, y: -1.8933359}
+  m_ConnectedAnchor: {x: 0, y: -1.8933295}
   m_UseConnectedAnchor: 1
   m_UseMotor: 0
   m_Motor:
@@ -1578,6 +1578,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1673503166}
+  - component: {fileID: 1673503168}
   - component: {fileID: 1673503167}
   - component: {fileID: 1673503165}
   - component: {fileID: 1673503164}
@@ -1705,7 +1706,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 2.65}
-  m_ConnectedAnchor: {x: 0, y: 6.79875}
+  m_ConnectedAnchor: {x: 0, y: 6.88275}
   m_UseConnectedAnchor: 1
   m_UseMotor: 0
   m_Motor:
@@ -1715,6 +1716,20 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: 0
     m_UpperAngle: 359
+--- !u!114 &1673503168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673503163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b42c7bba84dc85943a2503599cd57ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PivotSwing
+  distance: 1
+  speed: 0.3
 --- !u!1 &1800302707
 GameObject:
   m_ObjectHideFlags: 0
@@ -1925,7 +1940,7 @@ Transform:
   m_GameObject: {fileID: 1966724291}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 6.6, z: 0}
+  m_LocalPosition: {x: 0, y: 6.684, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1953,7 +1968,6 @@ MonoBehaviour:
   boxPrefab: {fileID: 8933349626860636582, guid: 1f9dc562e5f137544a965584dae76612, type: 3}
   boxSpawnPoint: {fileID: 1800302708}
   YOffset: 0.6
-  spawnForce: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
