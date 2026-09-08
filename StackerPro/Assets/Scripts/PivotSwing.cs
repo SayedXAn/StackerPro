@@ -3,28 +3,28 @@ using UnityEngine;
 
 public class PivotSwing : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    private Vector3 startPosition;
+    public Transform pointA;
+    public Transform pointB;
+    public float speed = 2f;
 
-    [Header("Movement Settings")]
-    public float distance = 3f; // Total width of the movement
-    public float speed = 2f;    // Speed of the wiper effect
+    private Transform target;
 
-    void Start()
+    private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        startPosition = rb.position;
+        target = pointB;
     }
 
-    void FixedUpdate()
+    private void Update()
     {
-        // Calculate the left/right offset using PingPong
-        float offset = Mathf.PingPong(Time.time * speed, distance) - (distance / 2f);
+        transform.position = Vector3.MoveTowards(
+            transform.position,
+            target.position,
+            speed * Time.deltaTime
+        );
 
-        // New target position based on the start position
-        Vector3 targetPosition = startPosition + new Vector3(offset, 0f, 0f);
-
-        // Move the Rigidbody safely while preserving physics interactions
-        rb.MovePosition(targetPosition);
+        if (Vector3.Distance(transform.position, target.position) < 0.01f)
+        {
+            target = target == pointA ? pointB : pointA;
+        }
     }
 }

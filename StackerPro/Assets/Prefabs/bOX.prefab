@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 612467928288447142}
   m_Layer: 0
   m_Name: bOX
-  m_TagString: Untagged
+  m_TagString: box
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52,7 +52,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 3.18}
-  m_ConnectedAnchor: {x: -0.13333333, y: -2.7733293}
+  m_ConnectedAnchor: {x: -0.02, y: -3.643}
   m_UseConnectedAnchor: 1
   m_UseMotor: 0
   m_Motor:

@@ -22,6 +22,8 @@ public class CraneController : MonoBehaviour
         if (canDrop && Mouse.current.leftButton.wasPressedThisFrame)
         {
             DropBox();
+            ScoreManager.Instance.AddScore();
+            UIManager.Instance.UpdateScoreText();
         }
     }
 
@@ -37,8 +39,7 @@ public class CraneController : MonoBehaviour
 
         // Get the joint on the new box
         currentJoint = currentBox.GetComponent<HingeJoint2D>();
-        currentJoint.connectedBody = boxSpawnPoint.GetComponent<Rigidbody2D>();
-
+        currentJoint.connectedBody = boxSpawnPoint.GetComponent<Rigidbody2D>();        
         canDrop = true;
         //currentBox.GetComponent<Rigidbody2D>().AddForceX(spawnForce, ForceMode2D.Impulse);
     }
