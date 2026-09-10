@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.02, y: -4.12, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc775015c454fa0428cc632e65c8484e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Box
+  cameraController: {fileID: 0}
 --- !u!233 &882257900031047802
 HingeJoint2D:
   m_ObjectHideFlags: 0
@@ -64,8 +65,8 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: 0, y: 3.18}
-  m_ConnectedAnchor: {x: -0.02, y: -3.643}
+  m_Anchor: {x: 0, y: 3.04}
+  m_ConnectedAnchor: {x: -0.02, y: -3.816}
   m_UseConnectedAnchor: 1
   m_UseMotor: 0
   m_Motor:
@@ -150,7 +151,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 9317eb5e3682f2541a222290b77f45e6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -171,7 +172,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 9317eb5e3682f2541a222290b77f45e6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

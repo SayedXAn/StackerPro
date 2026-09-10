@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using UnityEngine.InputSystem.EnhancedTouch;
+using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 public class CraneController : MonoBehaviour
 {
     [SerializeField] private GameObject boxPrefab;
@@ -14,14 +15,30 @@ public class CraneController : MonoBehaviour
     //public float spawnForce = 1;
     public GameObject spawnParent;
 
+    private void Awake()
+    {
+        EnhancedTouchSupport.Enable();
+    }
+
     private void Start()
     {
+        Application.targetFrameRate = 120;
         SpawnBox();
     }
 
     private void Update()
     {
-        if (canDrop && Mouse.current.leftButton.wasPressedThisFrame)
+        foreach (var touch in Touch.activeTouches)
+        {
+            if(canDrop && touch.phase == UnityEngine.InputSystem.TouchPhase.Began)
+            {
+                DropBox();
+                ScoreManager.Instance.AddScore();
+                UIManager.Instance.UpdateScoreText();
+            }
+        }
+
+        if (canDrop && (Keyboard.current.spaceKey.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame))
         {
             DropBox();
             ScoreManager.Instance.AddScore();

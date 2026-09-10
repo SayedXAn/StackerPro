@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 public class CameraStackFollow : MonoBehaviour
 {
+    public GameObject chain;
+    public GameObject LRPos;
+    public float chainThresh = 1f;
     [Header("Settings")]
     [Tooltip("How much empty space to keep above the highest box")]
     public float lookAheadOffset = 3f;
@@ -100,6 +103,16 @@ public class CameraStackFollow : MonoBehaviour
             transform.position.x,
             newY,
             transform.position.z
+        );
+        chain.transform.position = new Vector3(
+            chain.transform.position.x,
+            newY + chainThresh,
+            chain.transform.position.z
+        );
+        LRPos.transform.position = new Vector3(
+            LRPos.transform.position.x,
+            newY + chainThresh,
+            LRPos.transform.position.z
         );
     }
 
